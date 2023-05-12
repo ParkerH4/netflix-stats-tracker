@@ -77,6 +77,7 @@ watch_time_by_weekday['Percentage'] = (watch_time_by_weekday['Duration'].dt.tota
 
 
 
+
 # ------------------------ Building Data Visualization with Dash --------------------
 
 # Create a colorful pie chart to display the percentage of watch time on weekdays
@@ -90,17 +91,18 @@ weekday_pie_chart = go.Figure(data=go.Pie(
 # Create an HTML table to display the top 10 shows
 top_10_shows_table = html.Table(
     className='table',
+    style={ 'text-align': 'center', 'margin': '0', 'border-collapse': 'collapse'},
     children=[
         html.Thead(
             html.Tr([
-                html.Th('Title', ),
-                html.Th('Hours Watched', )
-            ], )
+                html.Th('Title', style={ 'border': '1px solid white', 'padding': '5px'}),
+                html.Th('Hours Watched', style={ 'border': '1px solid white', 'padding': '5px'})
+            ], style={'background-color': 'red'})
         ),
         html.Tbody([
             html.Tr([
-                html.Td(title, ),
-                html.Td(f'{hours:.2f}', )
+                html.Td(title, style={'background-color': '#D8D8D8', 'color': 'black','border': '1px solid white', 'padding': '5px'}),
+                html.Td(f'{hours:.2f}', style={'background-color': '#D8D8D8', 'color': 'black', 'border': '1px solid white', 'padding': '5px'})
             ])
             for title, hours in zip(top_10_shows['Title'], top_10_shows['Hours Watched'])
         ])
@@ -110,19 +112,20 @@ top_10_shows_table = html.Table(
 # Create an HTML table to display the top 10 fastest binge watches
 top_10_fastest_binges_table = html.Table(
     className='table',
+    style={'background-color': '#333', 'text-align': 'center', 'margin': '0', 'border-collapse': 'collapse'},
     children=[
         html.Thead(
             html.Tr([
-                html.Th('Title', ),
-                html.Th('Most eps in a day',),
-                html.Th('Avg hrs per day', )
-            ], )
+                html.Th('Title', style={ 'border': '1px solid white', 'padding': '5px'}),
+                html.Th('Most eps in a day', style={ 'border': '1px solid white', 'padding': '5px'}),
+                html.Th('Avg hrs per day', style={ 'border': '1px solid white', 'padding': '5px'})
+            ], style={'background-color': 'red'})
         ),
         html.Tbody([
             html.Tr([
-                html.Td(title, ),
-                html.Td(episodes_in_one_day, ),
-                html.Td(f'{avg_hours_per_day.total_seconds() / 3600:.2f}', )
+                html.Td(title, style={'background-color': '#D8D8D8', 'color': 'black', 'border': '1px solid white', 'padding': '5px'}),
+                html.Td(episodes_in_one_day, style={'background-color': '#D8D8D8','color': 'black','border': '1px solid white', 'padding': '5px'}),
+                html.Td(f'{avg_hours_per_day.total_seconds() / 3600:.2f}', style={'background-color': '#D8D8D8', 'color': 'black', 'border': '1px solid white', 'padding': '5px'})
             ])
             for title, episodes_in_one_day, avg_hours_per_day in zip(
                 top_10_fastest_binges['Title'],
@@ -141,6 +144,51 @@ device_views_pie_chart = go.Figure(data=go.Pie(
     marker=dict(colors=px.colors.qualitative.Pastel)
 ))
 
+# Remove the background colors of the pie chart
+device_views_pie_chart.update_layout(
+    plot_bgcolor='rgba(0,0,0,0)',
+    paper_bgcolor='rgba(0,0,0,0)',
+      title_font_color='white'
+)
+
+
+# Update the layout of the pie chart
+weekday_pie_chart.update_layout(
+    title={
+        'text': 'Which day is watched the most?',
+        'font': {
+            'color': 'white'
+        },
+        'x': 0.5,  # Set the x position to center align the title
+        'y': 0.9   # Set the y position to center align the title
+    },
+     legend={
+        'font': {
+            'color': 'white'
+        }
+    },
+    paper_bgcolor='rgba(0, 0, 0, 0)',  # Set the background color of the plot area
+    plot_bgcolor='rgba(0, 0, 0, 0)'   # Set the background color of the chart
+)
+
+# Update the styling of the weekday pie chart
+device_views_pie_chart.update_layout(
+    title={
+        'text': 'Most used Netflix devices?',
+         'font': {
+            'color': 'white'
+        },
+        'x': 0.5,  # Set the x position to center align the title
+        'y': 0.9   # Set the y position to center align the title
+    },
+     legend={
+        'font': {
+            'color': 'white'
+        }
+    },
+    paper_bgcolor='rgba(0, 0, 0, 0)',  # Set the background color of the plot area
+    plot_bgcolor='rgba(0, 0, 0, 0)'   # Set the background color of the chart
+)
 
 
 #-------------Create the Dash application------------------------
@@ -148,33 +196,37 @@ app = dash.Dash(__name__)
 
 # Define the layout of the app
 app.layout = html.Div(
+    style={'height': '100vh', 'width': '100%',  'display': 'flex', 'justify-content': 'center', 'align-items': 'center', },
     children=[
         html.Div(
+            style={'background-color': '#969493', 'padding': '10px', 'width': '900px', 'text-align': 'center', 'color': 'white', },
             children=[
-                html.H1('Netflix Viewing Statistics', ),
+                html.H1('Netflix Viewing Statistics', style={'background-color': 'red', 'display': 'inline-block', 'margin-bottom': '20px', 'width': '60%', 'border': '1px solid white'}),
                 html.Div(
                     className='row',
                     children=[
                         html.Div(
                             className='card',
-                            
+                            style={'background-color': 'red', 'display': 'inline-block', 'margin-right': '5px', 'width': '30%', 'border': '3px solid white'},
                             children=[
-                                html.H3('Hours Watched', ),
-                                html.H2(f'{hours_watched:.2f}',)
+                                html.H3('Hours Watched', style={'color': 'white'}),
+                                html.H2(f'{hours_watched:.2f}', style={'color': 'white'})
                             ]
                         ),
                         html.Div(
                             className='card',
+                            style={'background-color': 'red', 'display': 'inline-block', 'margin-right': '5px', 'width': '30%', 'border': '3px solid white'},
                             children=[
-                                html.H3('Total Content Watched', ),
-                                html.H2(total_content, )
+                                html.H3('Total Content Watched', style={'color': 'white'}),
+                                html.H2(total_content, style={'color': 'white'})
                             ]
                         ),
                         html.Div(
                             className='card',
+                            style={'background-color': 'red', 'display': 'inline-block', 'margin-right': '5px', 'width': '30%', 'border': '3px solid white'},
                             children=[
-                                html.H3('Unique Content', ),
-                                html.H2(unique_content, )
+                                html.H3('Unique Content', style={'color': 'white'}),
+                                html.H2(unique_content, style={'color': 'white'})
                             ]
                         )
                     ]
@@ -186,22 +238,25 @@ app.layout = html.Div(
                     children=[
                         html.Div(
                             className='card',
+                            style={'width': '50%', 'display': 'inline-block'},
                             children=[
                                 html.H3('Top 10 Shows Based on Watch Time'),
                                 html.Div(
                                     id='top-10-shows-table',
                                     children=top_10_shows_table,
-                                     
+                                    style={'padding-left': '50px'}  # Add padding to the left side of the table
                                 )
                             ]
                         ),
                         html.Div(
                             className='card',
+                            style={'width': '50%', 'display': 'inline-block', },
                             children=[
                                 html.H3('Top 10 Binged Shows'),
                                 html.Div(
                                     id='top-10-fastest-binges-table',
                                     children=top_10_fastest_binges_table,
+                                    style={'padding-left': '20px'}  # Add padding to the left side of the table
                                 )
                             ]
                         )
@@ -219,6 +274,7 @@ app.layout = html.Div(
                                     figure=weekday_pie_chart
                                 )
                             ],
+                            style={'width': '50%',  'margin-bottom': '0', 'display': 'inline-block'}
                         ),
                         html.Div(
                             className='card',
@@ -227,7 +283,8 @@ app.layout = html.Div(
                                     id='device-views-pie-chart',
                                     figure=device_views_pie_chart
                                 )
-                            ],       
+                            ],
+                            style={'width': '50%',  'margin-bottom': '0',  'display': 'inline-block'}
                         )
                     ]
                 )
