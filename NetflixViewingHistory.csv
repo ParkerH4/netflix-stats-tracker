@@ -1,0 +1,31 @@
+Profile Name,Start Time,Duration,Attributes,Autoplayed,View was hidden,Has branched playback,Title,Supplemental Video Type,Device Type,Bookmark,Latest Bookmark,Not latest view,Country
+Profile 1,2022-01-01 18:30:00,60,NA,None,No,No,Breaking Bad,NA,Smart TV,00:30:00,Yes,No,United States
+Profile 2,2022-01-02 20:15:00,45,NA,Unspecified,Yes,No,Friends,NA,Laptop,00:20:00,Yes,Yes,United Kingdom
+Profile 1,2022-01-03 15:45:00,30,NA,User_Interaction,No,Yes,Stranger Things,NA,Mobile,00:10:00,No,Yes,Canada
+Profile 2,2022-01-03 21:00:00,90,NA,None,No,Yes,Money Heist,NA,Tablet,00:45:00,Yes,Yes,Spain
+Profile 1,2022-01-04 19:30:00,120,NA,None,Yes,No,The Crown,NA,Smart TV,00:50:00,No,No,United States
+Profile 2,2022-01-05 22:45:00,60,NA,Unspecified,No,Yes,Narcos,NA,Laptop,00:30:00,Yes,Yes,Mexico
+Profile 1,2022-01-06 12:00:00,45,NA,None,No,Yes,Black Mirror,NA,Mobile,00:20:00,Yes,Yes,United States
+Profile 2,2022-01-07 18:30:00,60,NA,None,Yes,No,Stranger Things,NA,Smart TV,00:30:00,Yes,No,United Kingdom
+Profile 1,2022-01-08 20:45:00,90,NA,User_Interaction,No,Yes,Money Heist,NA,Tablet,00:45:00,Yes,Yes,Spain
+Profile 2,2022-01-09 16:15:00,30,NA,None,Yes,No,Friends,NA,Laptop,00:10:00,No,No,Canada
+Profile 1,2022-01-10 21:30:00,120,NA,None,No,Yes,Breaking Bad,NA,Smart TV,00:50:00,Yes,Yes,United States
+Profile 2,2022-01-11 14:45:00,60,NA,Unspecified,No,No,The Crown,NA,Mobile,00:30:00,No,Yes,United Kingdom
+Profile 1,2022-01-12 19:00:00,45,NA,None,No,No,Narcos,NA,Tablet,00:20:00,Yes,No,Mexico
+Profile 2,2022-01-13 17:30:00,90,NA,User_Interaction,No,Yes,Stranger Things,NA,Laptop,00:45:00,Yes,Yes,United States
+Profile 1,2022-01-14 21:15:00,30,NA,None,Yes,Yes,Friends,NA,Smart TV,00:10:00,No,Yes,United Kingdom
+Profile 2,2022-01-15 16:45:00,120,NA,None,Yes,No,Money Heist,NA,Mobile,00:50:00,Yes,No,Spain
+Profile 1,2022-01-16 18:00:00,60,NA,Unspecified,No,No,The Crown,NA,Tablet,00:30:00,Yes,Yes,United States
+Profile 2,2022-01-17 22:15:00,45,NA,None,Yes,No,Breaking Bad,NA,Laptop,00:20:00,No,Yes,Canada
+Profile 1,2022-01-18 14:30:00,90,NA,User_Interaction,No,Yes,Black Mirror,NA,Smart TV,00:45:00,Yes,Yes,United Kingdom
+Profile 2,2022-01-19 19:45:00,30,NA,None,No,Yes,Stranger Things,NA,Mobile,00:10:00,No,No,Spain
+Profile 1,2022-01-20 17:00:00,120,NA,None,Yes,No,Narcos,NA,Tablet,00:50:00,Yes,Yes,Mexico
+Profile 2,2022-02-17 22:15:00,45,NA,None,Yes,No,Breaking Bad,NA,Laptop,00:20:00,No,Yes,Canada
+Profile 2,2022-02-17 22:15:00,45,NA,None,Yes,No,Breaking Bad,NA,Laptop,00:20:00,No,Yes,Canada
+Profile 2,2022-01-17 22:15:00,45,NA,None,Yes,No,Breaking Bad,NA,Laptop,00:20:00,No,Yes,Canada
+Profile 2,2022-01-17 22:15:00,45,NA,None,Yes,No,Breaking Bad,NA,Laptop,00:20:00,No,Yes,Canada
+Profile 2,2022-01-17 22:15:00,45,NA,None,Yes,No,Breaking Bad,NA,Laptop,00:20:00,No,Yes,Canada
+Profile 2,2022-01-17 22:15:00,45,NA,None,Yes,No,Breaking Bad,NA,Laptop,00:20:00,No,Yes,Canada
+Profile 2,2022-01-17 22:15:00,45,NA,None,Yes,No,Breaking Bad,NA,Laptop,00:20:00,No,Yes,Canada
+Profile 2,2022-01-17 22:15:00,45,NA,None,Yes,No,Breaking Bad,NA,Laptop,00:20:00,No,Yes,Canada
+Profile 2,2022-01-17 22:15:00,45,NA,None,Yes,No,Breaking Bad,NA,Laptop,00:20:00,No,Yes,Canada
