@@ -79,6 +79,69 @@ watch_time_by_weekday['Percentage'] = (watch_time_by_weekday['Duration'].dt.tota
 
 # ------------------------ Building Data Visualization with Dash --------------------
 
+# Create a colorful pie chart to display the percentage of watch time on weekdays
+weekday_pie_chart = go.Figure(data=go.Pie(
+    labels=watch_time_by_weekday['Weekday'],
+    values=watch_time_by_weekday['Percentage'],
+    textinfo='label+percent',
+    marker=dict(colors=px.colors.qualitative.Pastel)
+))
+
+# Create an HTML table to display the top 10 shows
+top_10_shows_table = html.Table(
+    className='table',
+    children=[
+        html.Thead(
+            html.Tr([
+                html.Th('Title', ),
+                html.Th('Hours Watched', )
+            ], )
+        ),
+        html.Tbody([
+            html.Tr([
+                html.Td(title, ),
+                html.Td(f'{hours:.2f}', )
+            ])
+            for title, hours in zip(top_10_shows['Title'], top_10_shows['Hours Watched'])
+        ])
+    ]
+)
+
+# Create an HTML table to display the top 10 fastest binge watches
+top_10_fastest_binges_table = html.Table(
+    className='table',
+    children=[
+        html.Thead(
+            html.Tr([
+                html.Th('Title', ),
+                html.Th('Most eps in a day',),
+                html.Th('Avg hrs per day', )
+            ], )
+        ),
+        html.Tbody([
+            html.Tr([
+                html.Td(title, ),
+                html.Td(episodes_in_one_day, ),
+                html.Td(f'{avg_hours_per_day.total_seconds() / 3600:.2f}', )
+            ])
+            for title, episodes_in_one_day, avg_hours_per_day in zip(
+                top_10_fastest_binges['Title'],
+                top_10_fastest_binges['Record episodes in a day'],
+                top_10_fastest_binges['Average Hours per Day']
+            )
+        ])
+    ]
+)
+
+# Create a colorful pie chart to display the number of views per device
+device_views_pie_chart = go.Figure(data=go.Pie(
+    labels=device_views.index,
+    values=device_views.values,
+    textinfo='label+percent',
+    marker=dict(colors=px.colors.qualitative.Pastel)
+))
+
+
 
 #------------------------- Create the Dash application ------------------------
 
