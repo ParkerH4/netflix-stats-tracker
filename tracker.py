@@ -143,8 +143,98 @@ device_views_pie_chart = go.Figure(data=go.Pie(
 
 
 
-#------------------------- Create the Dash application ------------------------
+#-------------Create the Dash application------------------------
+app = dash.Dash(__name__)
 
+# Define the layout of the app
+app.layout = html.Div(
+    children=[
+        html.Div(
+            children=[
+                html.H1('Netflix Viewing Statistics', ),
+                html.Div(
+                    className='row',
+                    children=[
+                        html.Div(
+                            className='card',
+                            
+                            children=[
+                                html.H3('Hours Watched', ),
+                                html.H2(f'{hours_watched:.2f}',)
+                            ]
+                        ),
+                        html.Div(
+                            className='card',
+                            children=[
+                                html.H3('Total Content Watched', ),
+                                html.H2(total_content, )
+                            ]
+                        ),
+                        html.Div(
+                            className='card',
+                            children=[
+                                html.H3('Unique Content', ),
+                                html.H2(unique_content, )
+                            ]
+                        )
+                    ]
+                ),
+
+               
+                html.Div(
+                    className='row',
+                    children=[
+                        html.Div(
+                            className='card',
+                            children=[
+                                html.H3('Top 10 Shows Based on Watch Time'),
+                                html.Div(
+                                    id='top-10-shows-table',
+                                    children=top_10_shows_table,
+                                     
+                                )
+                            ]
+                        ),
+                        html.Div(
+                            className='card',
+                            children=[
+                                html.H3('Top 10 Binged Shows'),
+                                html.Div(
+                                    id='top-10-fastest-binges-table',
+                                    children=top_10_fastest_binges_table,
+                                )
+                            ]
+                        )
+                    ]
+                ),
+
+                html.Div(
+                    className='row',
+                    children=[
+                        html.Div(
+                            className='card',
+                            children=[
+                                dcc.Graph(
+                                    id='weekday-pie-chart',
+                                    figure=weekday_pie_chart
+                                )
+                            ],
+                        ),
+                        html.Div(
+                            className='card',
+                            children=[
+                                dcc.Graph(
+                                    id='device-views-pie-chart',
+                                    figure=device_views_pie_chart
+                                )
+                            ],       
+                        )
+                    ]
+                )
+            ]
+        )
+    ]
+)
 
 if __name__ == '__main__':
     app.run_server(debug=True)
