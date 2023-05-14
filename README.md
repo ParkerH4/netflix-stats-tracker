@@ -1,6 +1,6 @@
 # Netflix Stats and Data Tracker built with Python
 
-![image](https://github.com/ParkerH4/netflix-stats-tracker/assets/113216014/c0c5934d-3613-4058-affa-7f828019151d)
+![image](https://github.com/ParkerH4/netflix-stats-tracker/assets/113216014/3837842a-8760-461e-9a9b-c76c57f4aa66)
 
 ## Description
 This is a fun little project I wanted to build for my own enjoyment in order to see some fun stats about all the shows and content in general I have watched on Netflix.
