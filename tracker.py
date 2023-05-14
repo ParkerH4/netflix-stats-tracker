@@ -29,6 +29,9 @@ df['Title'] = df['Title'].str.split(':').str[0].str.strip()
 # Convert the 'Duration' column to timedelta format
 df['Duration'] = pd.to_timedelta(df['Duration'])
 
+# Make the duration filter out anything below 1 min because Netflix data counts autoplays and ads
+df = df[df['Duration']> '00:1:00']
+
 # ------------------------ Analyzing Data --------------------
 
 
