@@ -5,10 +5,10 @@ import plotly.express as px
 import pandas as pd
 
 
-# Define constants and file paths
+# Define constants
 CSV_FILE_PATH = 'NetflixViewingHistory.csv'
 
-# Load the CSV file into a Pandas DataFrame
+# Read file
 df = pd.read_csv(CSV_FILE_PATH)
 
 # ------------------------ Loading Data --------------------
@@ -20,10 +20,10 @@ df = df.drop(['Profile Name', 'Attributes', 'Supplemental Video Type', 'Bookmark
 # Split the 'Start Time' column into separate day, month, year, and time columns
 df[['Day', 'Month', 'Year', 'Time']] = df['Start Time'].apply(lambda x: pd.Series([x.split(' ')[0].split('-')[2], x.split(' ')[0].split('-')[1], x.split(' ')[0].split('-')[0], x.split(' ')[1]]))
 
-# Extract the weekday name from the 'Start Time' column
+# Extract the actual weekday name from the 'Start Time' column
 df['Weekday'] = pd.to_datetime(df['Start Time']).dt.day_name()
 
-# Extract the full title and the title without the episode
+# Split up title to not include episode names
 df['Title'] = df['Title'].str.split(':').str[0].str.strip()
 
 # Convert the 'Duration' column to timedelta format
@@ -47,16 +47,14 @@ total_content = df.shape[0]
 
 
 
-# Calculate watch time per show
+# Calculate watch time per show and then sort
 watch_time_per_show = df.groupby('Title')['Duration'].sum().reset_index()
-
-# Sort the Data by watch time in descending order
 watch_time_per_show = watch_time_per_show.sort_values('Duration', ascending=False)
 
-# Select the top 10 shows
+# Select the top 10 shows based on watch time
 top_10_shows = watch_time_per_show.head(10)
 
-# Calculate the top 10 hours watched
+# Calculate the top 10 hours watched and put into variable
 top_10_shows['Hours Watched'] = top_10_shows['Duration'].dt.total_seconds() / 3600
 
 
@@ -67,7 +65,7 @@ top_10_shows['Hours Watched'] = top_10_shows['Duration'].dt.total_seconds() / 36
 most_episodes_watched = df.groupby('Title')['Day'].count().reset_index()
 most_episodes_watched = most_episodes_watched.rename(columns={'Day': 'Episodes Watched'})
 
-# Calculate average hours watched on the show
+# Calculate average hours spent watching the show
 avg_hours_watched = df.groupby('Title').apply(lambda x: x['Duration'].sum() / pd.to_timedelta(x['Day'].nunique(), unit='D')).reset_index()
 avg_hours_watched = avg_hours_watched.rename(columns={0: 'Avg Hrs Watched'})
 
@@ -79,21 +77,20 @@ top_10_fastest_binges = pd.merge(top_10_fastest_binges, avg_hours_watched, on='T
 
 
 
-
 # Calculate the number of views per device
 device_views = df['Device Type'].apply(lambda x: ' '.join(x.split()[:2])).value_counts().head(5)
 
-# Calculate watch time by weekday
+# Calculate watch time by specific weekday
 watch_time_by_weekday = df.groupby('Weekday')['Duration'].sum().reset_index()
 
-# Calculate the percentage of watch time on weekdays
+# Calculate the percentage of watch time for each weekday
 watch_time_by_weekday['Percentage'] = (watch_time_by_weekday['Duration'].dt.total_seconds() / df['Duration'].sum().total_seconds()) * 100
 
 
 
 # ------------------------ Building Data Visualization with Dash --------------------
 
-# Create a colorful pie chart to display the percentage of watch time on weekdays
+# Create a pie chart to display the percentage of watch time on each weekday
 weekday_pie_chart = go.Figure(data=go.Pie(
     labels=watch_time_by_weekday['Weekday'],
     values=watch_time_by_weekday['Percentage'],
@@ -101,7 +98,7 @@ weekday_pie_chart = go.Figure(data=go.Pie(
     marker=dict(colors=px.colors.qualitative.Pastel)
 ))
 
-# Create an HTML table to display the top 10 shows
+# Create an HTML table to display the top 10 shows based on watch time
 top_10_shows_table = html.Table(
     className='table',
     style={ 'text-align': 'center', 'margin': '0', 'border-collapse': 'collapse'},
@@ -122,7 +119,7 @@ top_10_shows_table = html.Table(
     ]
 )
 
-# Create an HTML table to display the top 10 fastest binge watches
+# Create an HTML table to display the top 10 binged shows
 top_10_fastest_binges_table = html.Table(
     className='table',
     style={'background-color': '#333', 'text-align': 'center', 'margin': '0', 'border-collapse': 'collapse'},
@@ -150,7 +147,7 @@ top_10_fastest_binges_table = html.Table(
 )
 
 
-# Create a colorful pie chart to display the number of views per device
+# Create a pie chart to display the number of views per device
 device_views_pie_chart = go.Figure(data=go.Pie(
     labels=device_views.index,
     values=device_views.values,
@@ -166,7 +163,7 @@ device_views_pie_chart.update_layout(
 )
 
 
-# Update the layout of the pie chart
+# Update the layout of the weekday pie chart
 weekday_pie_chart.update_layout(
     title={
         'text': 'Which day is watched the most?',
@@ -185,7 +182,7 @@ weekday_pie_chart.update_layout(
     plot_bgcolor='rgba(0, 0, 0, 0)'   # Set the background color of the chart
 )
 
-# Update the styling of the weekday pie chart
+# Update the layout of the device pie chart
 device_views_pie_chart.update_layout(
     title={
         'text': 'Most used Netflix devices?',
@@ -208,18 +205,20 @@ device_views_pie_chart.update_layout(
 #-------------Create the Dash application------------------------
 app = dash.Dash(__name__)
 
-# Define the layout of the app
+# Setting up the layout of the dashboard
 app.layout = html.Div(
     style={'height': '100vh', 'width': '100%',  'display': 'flex', 'justify-content': 'center', 'align-items': 'center', },
     children=[
         html.Div(
             style={'background-color': '#969493', 'padding': '10px', 'width': '900px', 'text-align': 'center', 'color': 'white', },
             children=[
+                # Title
                 html.H1('Netflix Viewing Statistics', style={'background-color': 'red', 'display': 'inline-block', 'margin-bottom': '20px', 'width': '60%', 'border': '1px solid white'}),
                 html.Div(
                     className='row',
                     children=[
                         html.Div(
+                            # 3 stats cards section
                             className='card',
                             style={'background-color': 'red', 'display': 'inline-block', 'margin-right': '5px', 'width': '30%', 'border': '3px solid white'},
                             children=[
@@ -248,6 +247,7 @@ app.layout = html.Div(
 
                
                 html.Div(
+                # top 10 shows based on watch time
                     className='row',
                     children=[
                         html.Div(
@@ -258,11 +258,12 @@ app.layout = html.Div(
                                 html.Div(
                                     id='top-10-shows-table',
                                     children=top_10_shows_table,
-                                    style={'padding-left': '50px'}  # Add padding to the left side of the table
+                                    style={'padding-left': '50px'}  
                                 )
                             ]
                         ),
                         html.Div(
+                             # top 10 binged shows
                             className='card',
                             style={'width': '50%', 'display': 'inline-block', },
                             children=[
@@ -270,7 +271,7 @@ app.layout = html.Div(
                                 html.Div(
                                     id='top-10-fastest-binges-table',
                                     children=top_10_fastest_binges_table,
-                                    style={'padding-left': '20px'}  # Add padding to the left side of the table
+                                    style={'padding-left': '20px'}  
                                 )
                             ]
                         )
@@ -278,6 +279,7 @@ app.layout = html.Div(
                 ),
 
                 html.Div(
+                    # weekday pie chart
                     className='row',
                     children=[
                         html.Div(
@@ -291,6 +293,7 @@ app.layout = html.Div(
                             style={'width': '50%',  'margin-bottom': '0', 'display': 'inline-block'}
                         ),
                         html.Div(
+                            # device pie chart
                             className='card',
                             children=[
                                 dcc.Graph(
